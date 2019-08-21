@@ -5,7 +5,7 @@ config :elixir_monitoring_prom, ElixirMonitoringProm.Repo,
   username: "postgres",
   password: "postgres",
   database: "elixir_monitoring_prom_dev",
-  hostname: "localhost",
+  hostname: "postgres",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
