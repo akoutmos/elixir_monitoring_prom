@@ -35,7 +35,45 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
 
+  grafana:
+    image: grafana/grafana:6.3.3
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./docker/grafana/:/etc/grafana/provisioning/
+    env_file:
+      - ./docker/grafana/.env
+
+  prometheus:
+    image: prom/prometheus:v2.11.2
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./docker/prometheus/:/etc/prometheus/
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/config.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:v0.5.1
+    ports:
+      - '9187:9187'
+    depends_on:
+      - postgres
+    environment:
+      DATA_SOURCE_USER: postgres
+      DATA_SOURCE_PASS: postgres
+      DATA_SOURCE_URI: postgres:5432/?sslmode=disable
+
 volumes:
   elixir-deps: {}
   elixir-build: {}
   postgres-data: {}
+  prometheus-data: {}
+  grafana-data: {}
