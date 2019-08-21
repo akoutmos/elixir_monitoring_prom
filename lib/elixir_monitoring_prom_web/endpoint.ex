@@ -42,5 +42,9 @@ defmodule ElixirMonitoringPromWeb.Endpoint do
     key: "_elixir_monitoring_prom_key",
     signing_salt: "iPbxnMI/"
 
+  # Creates the /metrics endpoint for prometheus & collect stats
+  plug ElixirMonitoringProm.PrometheusExporter
+  plug ElixirMonitoringProm.PipelineInstrumenter
+
   plug ElixirMonitoringPromWeb.Router
 end

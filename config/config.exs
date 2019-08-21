@@ -15,7 +15,27 @@ config :elixir_monitoring_prom, ElixirMonitoringPromWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "nFSyXdlKCXuXTXWhnmEeVnA9VLzzbpuqX3UvpdaPo8uqpgjxd+cZorH+0GobASx8",
   render_errors: [view: ElixirMonitoringPromWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: ElixirMonitoringProm.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: ElixirMonitoringProm.PubSub, adapter: Phoenix.PubSub.PG2],
+  instrumenters: [ElixirMonitoringProm.PhoenixInstrumenter]
+
+config :prometheus, ElixirMonitoringProm.PipelineInstrumenter,
+  labels: [:status_class, :method, :host, :scheme, :request_path],
+  duration_buckets: [
+    10,
+    100,
+    1_000,
+    10_000,
+    100_000,
+    300_000,
+    500_000,
+    750_000,
+    1_000_000,
+    1_500_000,
+    2_000_000,
+    3_000_000
+  ],
+  registry: :default,
+  duration_unit: :microseconds
 
 # Configures Elixir's Logger
 config :logger, :console,
