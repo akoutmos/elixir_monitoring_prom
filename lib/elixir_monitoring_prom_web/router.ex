@@ -13,6 +13,12 @@ defmodule ElixirMonitoringPromWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", ElixirMonitoringPromWeb do
+    pipe_through :api
+
+    get "/breweries", BreweryController, :index
+  end
+
   scope "/", ElixirMonitoringPromWeb do
     pipe_through :browser
 

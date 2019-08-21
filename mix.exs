@@ -44,7 +44,8 @@ defmodule ElixirMonitoringProm.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:geo, "~> 3.1.0"},
-      {:geo_postgis, "~> 3.1.0"}
+      {:geo_postgis, "~> 3.1.0"},
+      {:faker, "~> 0.12.0"}
     ]
   end
 
