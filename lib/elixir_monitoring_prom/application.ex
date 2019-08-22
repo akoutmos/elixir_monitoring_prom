@@ -23,6 +23,8 @@ defmodule ElixirMonitoringProm.Application do
       nil
     )
 
+    ElixirMonitoringProm.Metrics.setup()
+
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository

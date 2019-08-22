@@ -1,6 +1,8 @@
 defmodule ElixirMonitoringProm.ZipCodes do
   alias ElixirMonitoringProm.{Repo, ZipCodes.ZipCode}
 
+  import Ecto.Query
+
   def get_zip_codes_in_radius(zip_code, radius_in_miles) do
     # Our raw Postgres query to get all the zip codes within a radius
     query =
@@ -28,6 +30,10 @@ defmodule ElixirMonitoringProm.ZipCodes do
       _ ->
         {:error, :not_found}
     end
+  end
+
+  def get_zip_code_info(zip) do
+    Repo.one(from zip_code in ZipCode, where: zip_code.zip_code == ^zip)
   end
 
   defp miles_to_meters(miles), do: miles * 1609.344
